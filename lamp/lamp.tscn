@@ -1,0 +1,38 @@
+[gd_scene load_steps=7 format=3 uid="uid://cx2jkm25ewsqo"]
+
+[ext_resource type="Texture2D" uid="uid://cl0aejtie3wgf" path="res://lamp/lamp_on.tres" id="1_bekw5"]
+[ext_resource type="Script" path="res://lamp/lamp.gd" id="2_vxcd3"]
+[ext_resource type="Texture2D" uid="uid://bni2o44dk3n80" path="res://lamp/lamp_off.tres" id="3_00ij4"]
+[ext_resource type="Script" path="res://interactable.gd" id="3_qfipa"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_00ij4"]
+size = Vector2(26.4848, 20)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_v2rw2"]
+size = Vector2(11.5152, 6)
+
+[node name="Lamp" type="Sprite2D"]
+scale = Vector2(0.868421, 1)
+texture = ExtResource("1_bekw5")
+offset = Vector2(0, -10)
+script = ExtResource("2_vxcd3")
+lamp_on_tex = ExtResource("1_bekw5")
+lamp_off_tex = ExtResource("3_00ij4")
+
+[node name="Interactable" type="Area2D" parent="."]
+script = ExtResource("3_qfipa")
+metadata/_custom_type_script = ExtResource("3_qfipa")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Interactable"]
+position = Vector2(-0.575758, -3)
+shape = SubResource("RectangleShape2D_00ij4")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(-3.45455, -2)
+shape = SubResource("RectangleShape2D_v2rw2")
+
+[connection signal="body_entered" from="Interactable" to="Interactable" method="_on_body_entered"]
+[connection signal="body_exited" from="Interactable" to="Interactable" method="_on_body_exited"]
+[connection signal="interacted" from="Interactable" to="." method="_on_interactable_interacted"]
